@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Client ID</title>
+</head>
+<body>
+    <h1>Client ID</h1>
+    <div id="clientId"></div>
+
+    <script>
+        fetch('/api/receiveClientId')
+            .then(response => response.json())
+            .then(data => {
+                const clientIdDiv = document.getElementById('clientId');
+                clientIdDiv.textContent = data.clientId || 'No Client ID received';
+            });
+    </script>
+</body>
+</html>
