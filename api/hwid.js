@@ -1,9 +1,11 @@
 export default function handler(req, res) {
     if (req.method === 'POST') {
-        const message = req.query.send; // Get the 'send' query parameter
-        res.status(200).json({ response: message }); // Respond with the message
+        const { hwid } = req.body; // Get the HWID from the request body
+
+        // Respond with the received HWID or any response data
+        res.status(200).json({ received: hwid });
     } else {
-        res.setHeader('Allow', ['POST']); // Specify allowed methods
-        res.status(405).end(`Method ${req.method} Not Allowed`); // Handle other methods
+        res.setHeader('Allow', ['POST']);
+        res.status(405).end(`Method ${req.method} Not Allowed`);
     }
 }
