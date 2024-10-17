@@ -1,25 +1,25 @@
-// Initialize an array to hold HWIDs
-let hwids = []; // This will store the HWIDs (for demonstration purposes)
+// Khởi tạo một mảng để lưu trữ HWIDs
+let hwids = []; // Mảng này sẽ lưu trữ HWIDs
 
 export default function handler(req, res) {
     if (req.method === 'POST') {
-        const { hwid } = req.body; // Get HWID from the request body
+        const { hwid } = req.body; // Lấy HWID từ body của yêu cầu
         
         if (hwid) {
-            // Add HWID to the list if it doesn't already exist
+            // Thêm HWID vào danh sách nếu nó chưa tồn tại
             if (!hwids.includes(hwid)) {
-                hwids.push(hwid); // Add the new HWID
+                hwids.push(hwid); // Thêm HWID mới vào danh sách
             }
-            res.status(204).send(); // Send a No Content response (no additional message)
+            res.status(204).send(); // Gửi phản hồi No Content (không có nội dung)
         } else {
-            res.status(400).send('HWID is required.'); // If HWID is missing
+            res.status(400).send('HWID is required.'); // Nếu thiếu HWID
         }
     } else if (req.method === 'GET') {
-        // Join the HWIDs into a single string separated by new lines
-        const responseBody = hwids.join('\n'); // Use '\n' to separate HWIDs by new lines
-        res.status(200).send(responseBody); // Respond with the list of HWIDs
+        // Kết hợp các HWID thành một chuỗi, ngăn cách bằng ký tự xuống dòng
+        const responseBody = hwids.join('\n'); 
+        res.status(200).send(responseBody); // Phản hồi với danh sách HWIDs
     } else {
-        // Handle non-POST or non-GET requests
+        // Xử lý các yêu cầu không phải là POST hoặc GET
         res.setHeader('Allow', ['POST', 'GET']);
         res.status(405).end(`Method ${req.method} Not Allowed`);
     }
