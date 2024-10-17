@@ -4,17 +4,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Client ID</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-size: 2rem;
+        }
+    </style>
 </head>
 <body>
-    <h1>Client ID</h1>
     <div id="clientId"></div>
 
     <script>
+        // Fetch the latest client ID from the API
         fetch('/api/receiveClientId')
             .then(response => response.json())
             .then(data => {
                 const clientIdDiv = document.getElementById('clientId');
-                clientIdDiv.textContent = data.clientId || 'No Client ID received';
+                if (data.clientId) {
+                    clientIdDiv.textContent = data.clientId; // Display the client ID
+                } else {
+                    clientIdDiv.style.display = 'none'; // Hide if no client ID is found
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching client ID:', error);
+                const clientIdDiv = document.getElementById('clientId');
+                clientIdDiv.style.display = 'none'; // Hide on error
             });
     </script>
 </body>
