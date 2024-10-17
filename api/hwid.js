@@ -1,26 +1,22 @@
-// Initialize an array to hold HWIDs
-let hwids = []; // This will store the HWIDs (for demonstration purposes)
+local HttpService = game:GetService("HttpService")
 
-export default function handler(req, res) {
-    if (req.method === 'POST') {
-        const { hwid } = req.body; // Get HWID from the request body
-        
-        if (hwid) {
-            // Add HWID to the list if it doesn't already exist
-            if (!hwids.includes(hwid)) {
-                hwids.push(hwid); // Add the new HWID
-            }
-            res.status(204).send(); // Send a No Content response (no additional message)
-        } else {
-            res.status(400).send('HWID is required.'); // If HWID is missing
-        }
-    } else if (req.method === 'GET') {
-        // Join the HWIDs into a single string separated by new lines
-        const responseBody = hwids.join('\n'); 
-        res.status(200).send(responseBody); // Respond with the list of HWIDs
-    } else {
-        // Handle non-POST or non-GET requests
-        res.setHeader('Allow', ['POST', 'GET']);
-        res.status(405).end(`Method ${req.method} Not Allowed`);
+-- Define your API URL
+local API_URL = "https://uhmyurl-git-main-newwhitelistservices-projects.vercel.app/api/hwid" -- Your API URL
+
+-- Function to send a GET request to retrieve HWIDs
+local function getHWIDs()
+    local response = (syn and syn.request or http_request) {
+        Url = API_URL,
+        Method = 'GET',
     }
-}
+
+    -- Check the response and print the result
+    if response.Success then
+        print("List of HWIDs:\n" .. response.Body) -- Output the list of HWIDs
+    else
+        print("Error: ", response.StatusCode) -- Output the status code if there's an error
+    end
+end
+
+-- Call the function to retrieve HWIDs
+getHWIDs()
